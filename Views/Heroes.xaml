@@ -1,0 +1,50 @@
+﻿<Page x:Class="DotaInfoSystem.Views.Heroes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DotaInfoSystem.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="690" d:DesignWidth="910"
+      Title="Heroes">
+
+    <Grid>
+        <Button 
+            x:Name="SubmitButton" Content="Submit" HorizontalAlignment="Left" 
+            Margin="70,319,0,0" VerticalAlignment="Top" Width="85" 
+            Height="26" FontFamily="Times New Roman" FontSize="18" 
+            Command="{Binding Submit}" CommandParameter="{Binding QueryText}"/>
+
+        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" Height="658" VerticalAlignment="Top" 
+                  Width="566" Margin="311,27,0,0" CanUserAddRows="False" CanUserDeleteRows="False" 
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" 
+                  CanUserSortColumns="True" ItemsSource="{Binding DataView}"/>
+
+        <Label Content="Look for Hero(es) by" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,63,0,0" 
+               Height="32" Width="163" FontFamily="Times New Roman" FontSize="18" HorizontalContentAlignment="Right" />
+        <ComboBox x:Name="AttrCombo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" 
+                  Margin="178,63,0,0" Height="32" FontFamily="Times New Roman" FontSize="18"
+                  SelectedValue="{Binding Selection}">
+            <ComboBoxItem Content="Name" />
+            <ComboBoxItem Content="Main Attr"/>
+            <ComboBoxItem Content="Attack Type"/>
+        </ComboBox>
+
+        <TextBox x:Name="TextQuery" HorizontalAlignment="Left" Height="32" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="157" Margin="16,100,0,0" FontFamily="Times New Roman" FontSize="18" 
+                 Text="{Binding QueryText}"/>
+        <Button Content="ToSpells" HorizontalAlignment="Left" Margin="70,632,0,0" VerticalAlignment="Top" 
+                Width="85" Height="27" FontFamily="Times New Roman" FontSize="16"
+                Command="{Binding ToSpells}"/>
+        <Slider x:Name="Level" HorizontalAlignment="Left" Margin="90,188,0,0" VerticalAlignment="Top" 
+                Height="34" Width="207" FontFamily="Times New Roman" FontSize="22" Maximum="30" 
+                IsSnapToTickEnabled="True" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" 
+                AutoToolTipPrecision="2" Value="{Binding Level}"/>
+        <Label Content="Level" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top" 
+               Width="75" FontFamily="Times New Roman" FontSize="16"/>
+        <Button Content="Relog" HorizontalAlignment="Left" Margin="208,632,0,0" VerticalAlignment="Top" 
+                Width="75" Height="28" FontFamily="Times New Roman" FontSize="16"
+                Command="{Binding ToLog}"/>
+
+    </Grid>
+</Page>
