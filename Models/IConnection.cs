@@ -14,13 +14,13 @@ namespace DotaInfoSystem.Models
         
         bool Login(string userName, string passWord);
 
-        DataTable GetAllHeroes();
+        DataTable GetAllHeroes(int lvl);
 
-        DataTable GetHeroesByName(string name);
+        DataTable GetHeroesByName(int lvl, string name);
 
-        DataTable GetHeroesByAttack(string type);
+        DataTable GetHeroesByAttack(int lvl, string type);
 
-        DataTable GetHeresByMainAttribute(string attr);
+        DataTable GetHeresByMainAttribute(int lvl, string attr);
 
         DataTable GetAllSpells();
 

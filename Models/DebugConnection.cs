@@ -24,7 +24,7 @@ namespace DotaInfoSystem.Models
         }
         
         bool IConnection.Login(string userName, string passWord)
-        //burn this shit down
+        //burn this **** down
         {
             var temp = new[] { ("admin", "admin"), ("user", "qwerty") };
             foreach (var item in temp)
@@ -39,27 +39,28 @@ namespace DotaInfoSystem.Models
             return false;
         }
 
-        DataTable IConnection.GetAllHeroes()
+        DataTable IConnection.GetAllHeroes(int lvl)
         {
-            var query = "select * from alex.heroes";
+            
+            var query = GetHeroStatsWithLevel(lvl);
             return GetQuery(query);
         }        
 
-        DataTable IConnection.GetHeroesByName(string name)
+        DataTable IConnection.GetHeroesByName(int lvl, string name)
         {
-            var query = $"select * from alex.heroes where NAME = '{name}'";
+            var query = GetHeroStatsWithLevel(lvl) + $" where NAME = '{name}'";
             return GetQuery(query);
         }
 
-        DataTable IConnection.GetHeroesByAttack(string type)
+        DataTable IConnection.GetHeroesByAttack(int lvl, string type)
         {
-            var query = $"select * from alex.heroes where ATTACK_TYPE = '{type}'";
+            var query = GetHeroStatsWithLevel(lvl) + $" where ATTACK_TYPE = '{type}'";
             return GetQuery(query);
         }
 
-        DataTable IConnection.GetHeresByMainAttribute(string attr)
+        DataTable IConnection.GetHeresByMainAttribute(int lvl, string attr)
         {
-            var query = $"select * from alex.heroes where MAIN_STAT = '{attr}'";
+            var query = GetHeroStatsWithLevel(lvl) + $" where MAIN_STAT = '{attr}'";
             return GetQuery(query);
         }
 
@@ -73,7 +74,7 @@ namespace DotaInfoSystem.Models
 
         DataTable IConnection.GetSpellsByName(string name)
         {
-            var query = @"select h.name Name, s.id Id, st.type_name TypeName," +
+            var query = @"select h.name Hero, s.id Id, st.type_name TypeName," +
                         @" REGEXP_REPLACE(regexp_substr(s.DESCRIPTION, '{''name'': [''""]" + 
                         @"[A-Za-z ''!-/)/(]+[''""],'), '{''name'': |''|,','') AS Name, " +
                         @" REGEXP_REPLACE(s.DESCRIPTION, '{''name'': [''""][A-Za-z ''!-/)/(]+[''""],|}', '') AS Description, " +
@@ -86,7 +87,7 @@ namespace DotaInfoSystem.Models
 
         DataTable IConnection.GetSpellsByHero(string hero)
         {
-            var query = @"select h.name Name, s.id Id, st.type_name TypeName," +
+            var query = @"select h.name Hero, s.id Id, st.type_name TypeName," +
                         @" REGEXP_REPLACE(regexp_substr(s.DESCRIPTION, '{''name'': [''""]" +
                         @"[A-Za-z ''!-/)/(]+[''""],'), '{''name'': |''|,','') AS Name, " +
                         @" REGEXP_REPLACE(s.DESCRIPTION, '{''name'': [''""][A-Za-z ''!-/)/(]+[''""],|}', '') AS Description, " +
@@ -111,11 +112,36 @@ namespace DotaInfoSystem.Models
             return dt;
         }
 
-        private string GetHeroStatsWithLevel(int level)
+        private string GetHeroStatsWithLevel(int lvl)
         {
-            throw new NotImplementedException();
+            return $"SELECT id, name, main_stat, attack_type, attack_range, " +
+                    $"my_agil(agil, agil_incr, {lvl}) as agil," +
+                    $" my_intel(intel, int_incr, {lvl}) as intel," +
+                    $" my_stren(stren, stren_incr, {lvl}) as stren," +
+                    $" agil_incr, int_incr, stren_incr," +
+                    $" my_damage(id, {lvl}) as damage," +
+                    $" my_hp(hp_base, stren, stren_incr, {lvl}) as hp," +
+                    $" my_mana(mana_base, intel, int_incr, {lvl}) as mana," +
+                    $" my_armor(armour_base, agil, agil_incr, {lvl}) as armor," +
+                    $" my_attackspeed(attack_speed_base, agil, agil_incr, {lvl}) as  attack_speed," +
+                    $" my_movement(movespeed_base, agil, agil_incr, {lvl}) as movespeed," +
+                    $" my_spellresist(spellresist_base, stren, stren_incr, {lvl}) as spellresist," +
+                    $" my_hpregen(hp_regen_base, stren, stren_incr, {lvl}) as hp_regen," +
+                    $" my_manaregen(mana_regen_base, intel, int_incr, {lvl}) as mana_regen," +
+                    $" view_range, projectile_speed FROM heroes";
         }
 
         
     }
 }
+
+/*
+$"SELECT id, name, main_stat, attack_type, attack_range, my_agil(agil, agil_incr, {lvl}) as agil," +
+$" my_intel(intel, int_incr, {lvl}) as intel, my_stren(stren, stren_incr, {lvl}) as stren, agil_incr, int_incr, stren_incr," +
+$" my_damage(id, {lvl}) as damage, my_hp(hp_base, stren, stren_incr, {lvl}) as hp, my_mana(mana_base, intel, int_incr, {lvl}) as mana," +
+$" my_armor(armour_base, agil, agil_incr, {lvl}) as armor, my_attackspeed(attack_speed_base, agil, agil_incr, {lvl}) as  attack_speed," +
+$" my_movement(movespeed_base, agil, agil_incr, {lvl}) as movespeed," +
+$" my_spellresist(spellresist_base, stren, stren_incr, {lvl}) as spellresist," +
+$" my_hpregen(hp_regen_base, stren, stren_incr, {lvl}) as hp_regen, my_manaregen(mana_regen_base, intel, int_incr, {lvl}) as mana_regen," +
+$" view_range, projectile_speed FROM heroes";
+*/

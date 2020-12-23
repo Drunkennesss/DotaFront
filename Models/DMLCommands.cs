@@ -20,55 +20,67 @@ namespace DotaInfoSystem.Models
     }
     public class GetAllHeroesCommand : DMlCommand
     {
-        public GetAllHeroesCommand(IConnection con, IDataGridContainer container) 
+        private ILevelContainer level;
+        public GetAllHeroesCommand(IConnection con, IDataGridContainer container, ILevelContainer levelContainer) 
             : base(con, container)
-        {  }
+        {
+            level = levelContainer;
+        }
 
         public override void Execute(object param)
         {
-            var dt = connection.GetAllHeroes();
+            var dt = connection.GetAllHeroes((int)level.Level);
             gridContainer.ChangeDataGrid(dt.DefaultView);
         }
     }
 
     public class GetHeroesByNameCommand : DMlCommand
     {
-        public GetHeroesByNameCommand(IConnection con, IDataGridContainer container)
+        private ILevelContainer level;
+        public GetHeroesByNameCommand(IConnection con, IDataGridContainer container, ILevelContainer levelContainer)
             : base(con, container)
-        { }
+        {
+            level = levelContainer;
+        }
 
         public override void Execute(object param)
         {
             var name = (param as string) ?? "";
-            var dt = connection.GetHeroesByName(name);
+            var dt = connection.GetHeroesByName((int)level.Level, name);
             gridContainer.ChangeDataGrid(dt.DefaultView);
         }
     }
 
     public class GetHeroesByAttackCommand : DMlCommand
     {
-        public GetHeroesByAttackCommand(IConnection con, IDataGridContainer container)
+        private ILevelContainer level;
+        public GetHeroesByAttackCommand(IConnection con, IDataGridContainer container, ILevelContainer levelContainer)
             : base(con, container)
-        {  }
+        {
+            level = levelContainer;
+        }
 
         public override void Execute(object param)
         {
             var type = (param as string) ?? "";
-            var dt = connection.GetHeroesByAttack(type);
+            var dt = connection.GetHeroesByAttack((int)level.Level, type);
             gridContainer.ChangeDataGrid(dt.DefaultView);
         }
     }
 
     public class GetHeroesByMainAttributeCommand : DMlCommand
     {
-        public GetHeroesByMainAttributeCommand(IConnection con, IDataGridContainer container )
+        private ILevelContainer level;
+        public GetHeroesByMainAttributeCommand(IConnection con, IDataGridContainer container, ILevelContainer levelContainer)
             : base(con, container)
-        {  }
+        {
+            level = levelContainer;
+        }
 
         public override void Execute(object param)
         {
             var attr = (param as string) ?? "";
-            var dt = connection.GetHeresByMainAttribute(attr);
+            var dt = connection.GetHeresByMainAttribute((int)level.Level, attr);
             gridContainer.ChangeDataGrid(dt.DefaultView);
         }
     }
@@ -111,7 +123,7 @@ namespace DotaInfoSystem.Models
         public override void Execute(object param)
         {
             var hero = (param as string) ?? "";
-            var dt = connection.GetSpellsByName(hero);
+            var dt = connection.GetSpellsByHero(hero);
             gridContainer.ChangeDataGrid(dt.DefaultView);
         }
     }

@@ -95,7 +95,7 @@ namespace DotaInfoSystem.Models
             /*
             * I have no idea why, when i call change current page
             * it doesn't work until second click, so i call it twice
-            * (this is a fucking mess)
+            * (this is a ******* mess)
             */
             pages.ChangeCurrentPage(PageNumber.Spells);
             pages.ChangeCurrentPage(PageNumber.Spells);

@@ -9,7 +9,7 @@ using System.Data;
 
 namespace DotaInfoSystem.ViewModels
 {
-    class HeroesViewModel : DataGridViewModel
+    class HeroesViewModel : DataGridViewModel, ILevelContainer
     {
         
         private double level;
@@ -37,7 +37,7 @@ namespace DotaInfoSystem.ViewModels
             ICommand neededCommand;
             if (QueryText == string.Empty)
             {
-                neededCommand = new GetAllHeroesCommand(connection, this);
+                neededCommand = new GetAllHeroesCommand(connection, this, this);
             }
             else
             {
@@ -45,10 +45,10 @@ namespace DotaInfoSystem.ViewModels
                 var str = reg.Replace(Selection, "");
                 neededCommand = str switch
                 {
-                    "Name" => new GetHeroesByNameCommand(connection, this),
-                    "Attr" => new GetHeroesByMainAttributeCommand(connection, this),
-                    "Type" => new GetHeroesByAttackCommand(connection, this),
-                    _ => new GetAllHeroesCommand(connection, this)
+                    "Name" => new GetHeroesByNameCommand(connection, this, this),
+                    "Attr" => new GetHeroesByMainAttributeCommand(connection, this, this),
+                    "Type" => new GetHeroesByAttackCommand(connection, this, this),
+                    _ => new GetAllHeroesCommand(connection, this, this)
                 };
             }
             Submit = neededCommand;
