@@ -48,7 +48,7 @@ namespace DotaInfoSystem.Models
                 /*
                  * I have no idea why, when i call change current page
                  * it doesn't work until second click, so i call it twice
-                 * (this is a fucking mess)
+                 * (this is a ******* mess)
                  */
                 pageHolder.ChangeCurrentPage(PageNumber.Heroes);
                 pageHolder.ChangeCurrentPage(PageNumber.Heroes);
@@ -74,7 +74,7 @@ namespace DotaInfoSystem.Models
             /*
             * I have no idea why, when i call change current page
             * it doesn't work until second click, so i call it twice
-            * (this is a fucking mess)
+            * (this is a ******* mess)
             */
             pages.ChangeCurrentPage(PageNumber.Login);
             pages.ChangeCurrentPage(PageNumber.Login);
@@ -118,7 +118,7 @@ namespace DotaInfoSystem.Models
             /*
             * I have no idea why, when i call change current page
             * it doesn't work until second click, so i call it twice
-            * (this is a fucking mess)
+            * (this is a ******* mess)
             */
             pages.ChangeCurrentPage(PageNumber.Heroes);
             pages.ChangeCurrentPage(PageNumber.Heroes);

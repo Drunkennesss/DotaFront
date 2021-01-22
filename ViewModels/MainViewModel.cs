@@ -29,7 +29,7 @@ namespace DotaInfoSystem.ViewModels
         }
         public MainViewModel(IConnection con) : base(con)
         {
-            //TODO: implement page array
+            
             var loginPage = new Login();
             loginPage.DataContext = new LoginViewModel(con, this, loginPage);
 
@@ -49,7 +49,7 @@ namespace DotaInfoSystem.ViewModels
 
         void IPageHolder.ChangeCurrentPage(PageNumber number)
         {
-            //TODO: Make this independent of array's emelemt position
+            //TODO: Make this independent of array's element position
             CurrentPage = pages[(int)number];
         }
 
